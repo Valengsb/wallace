@@ -18,7 +18,7 @@ shinyUI(tagList(
              tabPanel("6 Model", value=6),
              tabPanel("7 Visualize", value=7),
              tabPanel("8 Project", value=8),
-             tabPanel("Session Code", value='rmd'),
+             tabPanel("9 Session Code", value='rmd'),
              
              fluidRow(column(4,
                              wellPanel(
