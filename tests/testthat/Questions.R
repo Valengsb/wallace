@@ -8,8 +8,14 @@
 # 3. Am I missing something important or if on the contrary, 
 # the test is being redundant? >> No, I'm not 
 
-# 5. is it ok as I'm managing the test data? those folders >> Yes, it is OK
+# 4. is it ok as I'm managing the test data? those folders >> Yes, it is OK
 
-# 6. Libraries at the beginig (after the context, or should I use Library::function
+# 5. Libraries at the beginig (after the context, or should I use Library::function)
 
-# 7. Shiny maessages test?
+#______________________________________________________________________________________#
+
+# 6. Shiny maessages test?
+
+# 7. What is GetWCTiles.R, should I test that? 
+
+# 8. Should I teste runBIOCLIM and runMAXNET?
