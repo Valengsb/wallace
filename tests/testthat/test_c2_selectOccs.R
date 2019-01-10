@@ -17,8 +17,7 @@ expertAddedPoly <- expertAddedPoly@polygons[[1]]@Polygons[[1]]@coords
 
 
 ### run function 
-out.map <- c2_selectOccs(occs = occs, polySelXY = expertAddedPoly,
-                         polySelID = 1)
+out.map <- c2_selectOccs(occs = occs, polySelXY = expertAddedPoly, polySelID = 1)
 
 
 ### test if the error messages appear when they are supposed to 

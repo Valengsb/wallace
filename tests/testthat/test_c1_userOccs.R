@@ -6,8 +6,7 @@ source("test_helper_functions.R")
 
 
 ### run function
-user.occs <- c1_userOccs(
-  csvPath = './Data/Marmosops_sp.csv', csvName = 'Marmosops_sp')
+user.occs <- c1_userOccs(csvPath = './Data/Marmosops_sp.csv', csvName = 'Marmosops_sp')
 
 
 ### test if the error messages appear when they are supposed to 
