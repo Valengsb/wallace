@@ -5,16 +5,16 @@ context("bgMask - Step 2.1")
 source("test_helper_functions.R")
 
 
-### get data
+### Set parameters
 
 ## occurrences
 occs <-  c1_queryDb(spName = "panthera onca", occDb = "gbif", occNum = 100)
 occs <- as.data.frame(occs$cleaned)
 
-## background
-# enviromental data
+## enviromental variables 
 envs <- c3_worldclim(bcRes = 10, bcSel = (list(TRUE,TRUE,TRUE,TRUE,TRUE)))
-# background extent 
+
+## background extent 
 bgExt <- c4_bgExtent(occs, envs, bgSel = 'bb', bgBuf = 0.5) 
 
 
@@ -25,8 +25,9 @@ bgMask <- c4_bgMask(occs, envs, bgExt)
 ### test if the error messages appear when they are supposed to 
 test_that("error checks", {
   # the user has not selected the background extent 
-  expect_error(c4_bgMask(occs, envs, bgExt=NULL),'Before sampling background points, define the background extent.')
-})
+  expect_error(c4_bgMask(occs, envs, bgExt=NULL),
+               'Before sampling background points, define the background extent.')
+  })
 
 ### test output features
 test_that("output type checks", {
@@ -36,11 +37,12 @@ test_that("output type checks", {
   expect_equal(raster::nlayers(envs), raster::nlayers(bgMask))
   # the masked layers are the same as uploaded in the comp. 3
   expect_equal(names(bgMask), names(envs))
+  # all the environmental layers have the same amount of pixels
+  expect_equal(raster::cellStats(bgMask, sum), raster::cellStats(bgMask, sum))
   # the original layers have more pixels than the masked ones
   expect_true(raster::cellStats(bgMask$bio1.1, sum) < raster::cellStats(envs$bio1.1, sum))
   expect_true(raster::cellStats(bgMask$bio1.2, sum) < raster::cellStats(envs$bio1.2, sum))
   expect_true(raster::cellStats(bgMask$bio1.3, sum) < raster::cellStats(envs$bio1.3, sum))
   expect_true(raster::cellStats(bgMask$bio1.4, sum) < raster::cellStats(envs$bio1.4, sum))
   expect_true(raster::cellStats(bgMask$bio1.5, sum) < raster::cellStats(envs$bio1.5, sum))
-})
-
+  })
