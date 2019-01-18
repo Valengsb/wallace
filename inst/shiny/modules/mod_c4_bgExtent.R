@@ -15,6 +15,11 @@ bgExtent_UI <- function(id) {
 bgExtent_MOD <- function(input, output, session) {
   reactive({
     # ERRORS ####
+    if (is.null(envs())) {
+      shinyLogs %>% writeLog(type = 'error',
+                             'Environmental variables missing. Obtain them in component 3.')
+      return()
+    }
     req(curSp(), occs(), envs())
     
     # loop over all species if batch is on

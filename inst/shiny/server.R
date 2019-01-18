@@ -41,7 +41,7 @@ shinyServer(function(input, output, session) {
   intro <- '***WELCOME TO WALLACE***'
   brk <- paste(rep('------', 14), collapse='')
   expl <- 'Please find messages for the user in this log window.'
-  logInit <- c(paste(intro, brk, expl, brk, sep='<br>'))
+  logInit <- c(paste(intro, brk, expl, brk, '', sep='<br>'))
   shinyLogs <- reactiveVal(logInit)
   
   # load modules
@@ -145,6 +145,10 @@ shinyServer(function(input, output, session) {
       spp[[curSp()]]$polySelXY <- xy
       spp[[curSp()]]$polySelID <- id
     } 
+    if(component() == 'penvs') {
+      spp[[curSp()]]$polyExtXY <- xy
+      spp[[curSp()]]$polyExtID <- id
+    }
     if(component() == 'proj') {
       spp[[curSp()]]$polyPjXY <- xy
       spp[[curSp()]]$polyPjID <- id  
@@ -168,6 +172,7 @@ shinyServer(function(input, output, session) {
                 "userEnvs" = userEnvs_MAP,
                 "bgSel" = bgExtent_MAP, 
                 "bgUser" = userBgExtent_MAP,
+                "bgDraw" = drawBgExtent_MAP,
                 "nsp" = partitionNonSpat_MAP, 
                 "sp" = partitionSpat_MAP,
                 "mapPreds" = mapPreds_MAP, 
@@ -555,11 +560,22 @@ shinyServer(function(input, output, session) {
   })
   
   # # # # # # # # # # # # # # # # # # # # # # # 
-  # module User-defined Background Extent ####
+  # module Upload Background Extent ####
   # # # # # # # # # # # # # # # # # # # # # # # 
   observeEvent(input$goUserBg, {
     userBg <- callModule(userBgExtent_MOD, 'c4_userBgExtent')
     userBg()
+  })
+  
+  # # # # # # # # # # # # # # # # # # # # # # # 
+  # module Draw Background Extent ####
+  # # # # # # # # # # # # # # # # # # # # # # # 
+  observeEvent(input$goDrawBg, {
+    drawBg <- callModule(drawBgExtent_MOD, 'c4_drawBgExtent')
+    drawBg()
+    shiny::observe({
+      shinyjs::toggleState("dlBgShp", !is.null(spp[[curSp()]]$procEnvs$bgExt))
+    })
   })
   
   # # # # # # # # # # # # # # # # # # # # # # # # #
