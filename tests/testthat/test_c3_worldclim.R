@@ -12,7 +12,7 @@ source("test_helper_functions.R")
 
 ### Set parameters
 ## resolution 
-bcRes = 10 # (10 arcmin)
+bcRes <- 10 # (10 arcmin)
 ## variables to download 
 envar <- list(TRUE, TRUE,TRUE,TRUE,TRUE)
 

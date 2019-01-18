@@ -7,9 +7,9 @@ source("test_helper_functions.R")
 
 ### Set parameters
 ## path to the file
-csvPath = './Data/Marmosops_sp.csv'
+csvPath <- './Data/Marmosops_sp.csv'
 ## file name
-csvName = 'Marmosops_sp' 
+csvName <- 'Marmosops_sp' 
 
 
 ### run function
@@ -29,7 +29,7 @@ test_that("warnings checks", {
    # user's input does not have coordinates
   expect_warning(c1_userOccs(csvPath = './Data/Marmosops_NA.csv', 
                              csvName = 'Marmosops_NA'),
-                 paste0('No records with coordinates found in  ', "Marmosops_NA", " ."))
+                 paste0('No records with coordinates found in ', "Marmosops_NA", "."))
   })
 
 ### test output features 

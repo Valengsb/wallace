@@ -29,7 +29,7 @@ test_that("error checks", {
   expect_error(c2_selectOccs(occs = NULL, polySelXY = expertAddedPoly),
                'Before processing occurrences, obtain the data in component 1.')
   # the user has not finished the polygon 
-  expect_error(out.map <- c2_selectOccs(occs, polySelXY = NULL),
+  expect_error(c2_selectOccs(occs, polySelXY = NULL),
                'The polygon has not been finished. Please press "Finish" on the map toolbar then the "Select Occurrences" button.')
   })
 

@@ -12,7 +12,7 @@ out.gbif <- c1_queryDb(spName = "panthera onca", occDb = "gbif", occNum = 100)
 occs <- as.data.frame(out.gbif$cleaned)
 
 ## thinning distance (km)
-thinDist = 30
+thinDist <- 30
 
 
 ### run function 

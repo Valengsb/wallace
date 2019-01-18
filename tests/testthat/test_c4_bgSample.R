@@ -20,7 +20,7 @@ bgExt <- c4_bgExtent(occs, envs, bgSel = 'bb', bgBuf = 0.5)
 bgMask <- c4_bgMask(occs, envs, bgExt)
 
 ## Number of background points to sample
-bgPtsNum = 1000
+bgPtsNum <- 1000
 
 
 ### run function 
@@ -37,9 +37,18 @@ test_that("output type checks", {
   expect_equal(c('longitude', 'latitude'), names(bgsample))
   # the number of background pints sampled are the same as specified in the function
   expect_equal(nrow(bgsample), bgPtsNum)
-  # all the points sampled overlap with the study region
+  # check if all the points sampled overlap with the study region
+    # set longitude and latitude
   sp::coordinates(bgsample) <- ~ longitude + latitude
-  sp::proj4string(bgsample) <- sp::proj4string(bgExt)
-  overlap <- sp::over(bgsample, bgExt)
-  expect_false(0 %in% overlap$x)
+    # create polygon 
+  Poly <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(
+    bgExt@polygons[[1]]@Polygons[[1]]@coords)),ID=1)))
+  # check which points overlap 
+  overlap <- sp::over(bgsample, Poly)
+  expect_false(NA %in% overlap)
   })
+
+
+
+
+

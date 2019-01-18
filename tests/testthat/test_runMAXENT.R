@@ -15,6 +15,10 @@ source("test_helper_functions.R")
 out.gbif <- c1_queryDb(spName = "panthera onca", occDb = "gbif", occNum = 100)
 occs <- as.data.frame(out.gbif$cleaned)
 
+records <- which(is.na(raster::extract(envs$bio1.1, occs[,3:4])) == TRUE)
+occs <- occs[-records, ] 
+
+
 ## background mask
 # enviromental data
 envs <- c3_worldclim(bcRes = 10, bcSel = (list(TRUE,TRUE,TRUE,TRUE,TRUE)))
@@ -35,16 +39,16 @@ occsGrp = partblock$occ.grp
 bgGrp = partblock$bg.grp
 
 ## regularization multipliers 
-rms = c(1:5)
+rms <- c(1:5)
 ## regularization multipliers step value
-rmsStep = 1
+rmsStep <- 1
 ## feature classes
-fcs = c('L', 'H')
+fcs <- c('L')
 
 ## algorithm
-maxentJar = 'maxent.jar'
-maxnet = 'maxnet'
-bioclim = 'bioclim'
+maxentJar <- 'maxent.jar'
+maxnet <- 'maxnet'
+bioclim <- 'bioclim'
 
 
 ### run function
@@ -61,6 +65,25 @@ test_that("error checks", {
                          clampSel = TRUE, algMaxent = 'maxent.jar'), "Before building a model, please partition 
                         occurrences for cross-validation.")
 })
+
+### test output features 
+test_that("output type checks", {
+  # the output is a list
+  expect_is(maxentjar, "list")
+  expect_is(maxentjar[c("evalTbl","evalTblBins", "models")], "list")
+  expect_is(maxentjar$predictions, "RasterStack")
+  expect_is(maxentjar$occPredVals, "matrix")
+  # the list has two elements
+  expect_equal(length(maxentjar), 5)
+  expect_equal(length(maxentjar$models), (length(rms)/rmsStep)*length(fcs))
+  expect_equal(nrow(maxentjar$evalTbl), (length(rms)/rmsStep)*length(fcs))
+  expect_equal(nrow(maxentjar$evalTblBins), (length(rms)/rmsStep)*length(fcs))
+  expect_equal(ncol(maxentjar$evalTbl), nrow(maxentjar$evalTbl)*4)
+  expect_equal(ncol(maxentjar$evalTblBins), nrow(maxentjar$evalTblBins)*4)
+  expect_equal(length(maxentjar$models), raster::nlayers(maxentjar$occPredVals))
+})
+
+
 
 #maxentjar$models$
 #maxentjar$evalTbl

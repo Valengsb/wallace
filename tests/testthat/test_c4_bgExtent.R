@@ -1,6 +1,7 @@
 ##### QUESTIONS
   # 1. error with message: 'Too few localities (<2) to create a background polygon.' Expectation 2
-  # 2. point buffers option desn't print any message 
+  # 2. point buffers option doesn't print any message 
+  # 3. I couldn't test the overlap with the point Buffers background extent 
 
 
 #### COMPONENT 4: Process Environmental Data
@@ -23,12 +24,12 @@ foccs <- as.data.frame(foccs$cleaned)
 envs <- c3_worldclim(bcRes = 10, bcSel = (list(TRUE,TRUE,TRUE,TRUE,TRUE)))
 
 ## background extent 
-bBox = 'bb' # bounding Box 
-bPoint = 'ptbuf' # point Buffers 
-bPoly = 'mcp' # minimum Convex Polygon 
+bBox <- 'bb' # bounding Box 
+bPoint <- 'ptbuf' # point Buffers 
+bPoly <- 'mcp' # minimum Convex Polygon 
 
 ## Study region buffer distance (degree)
-bgBuf = 0.5
+bgBuf <- 0.5
 
 
 ### run function and set coordinates reference system
@@ -65,20 +66,31 @@ test_that("output type checks", {
   expect_false(raster::area(bgExt1) == raster::area(bgExt2))
   expect_false(raster::area(bgExt1) == raster::area(bgExt3))
   expect_false(raster::area(bgExt2) == raster::area(bgExt3))
-  # all the records are within the study region
+  # check if all the records are within the study region
     # extract longitude and latitude columns from the 'occs' data frame 
   points <- occs[,c(3,4)]
   sp::coordinates(points) <- ~ longitude + latitude
-    # bounding Box 
-  sp::proj4string(points) <- sp::proj4string(bgExt1)
-  overlap1 <- sp::over(points, bgExt1)
-  expect_false(0 %in% overlap1$x)
-    # point Buffers 
-  sp::proj4string(points) <- sp::proj4string(bgExt2)
-  overlap2 <- sp::over(points, bgExt2)
-  expect_false(0 %in% overlap2$x)
-    # minimum Convex Polygon 
-  sp::proj4string(points) <- sp::proj4string(bgExt3)
-  overlap3 <- sp::over(points, bgExt3)
-  expect_false(0 %in% overlap3$x)
+  # bounding Box 
+    # create polygon 
+  Poly1 <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(
+    bgExt1@polygons[[1]]@Polygons[[1]]@coords)),ID=1)))
+  # check which points overlap 
+  overlap1 <- sp::over(points, Poly1)
+  expect_false(NA %in% overlap1)
+  # point Buffers 
+    # create polygon 
+  #Poly2 <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(
+    #bgExt2@polygons[[1]]@Polygons[[1]]@coords)),ID=1)))
+  # check which points overlap 
+  #overlap2 <- sp::over(points, Poly2)
+  #expect_false(NA %in% overlap2)
+  # minimum Convex Polygon 
+    # create polygon 
+  Poly3 <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(
+    bgExt3@polygons[[1]]@Polygons[[1]]@coords)),ID=1)))
+  # check which points overlap 
+  overlap3 <- sp::over(points, Poly3)
+  expect_false(NA %in% overlap3)
   })
+
+
