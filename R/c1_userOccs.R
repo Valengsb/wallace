@@ -4,13 +4,13 @@
 #' @details
 #' See Examples.
 #'
-#' @param csvPath
-#' @param csvName
+#' @param csvPath path to the occurrence file, which has to be a .CSV document
+#' @param csvName occurrence file name
 #' @param shinyLogs
 # @keywords
 #'
-# @examples
-#'
+#' @examples
+#' c1_userOccs(csvPath = './Data/Marmosops_sp.csv', csvName = 'Marmosops_sp' )
 #'
 # @return 
 #' @author Jamie Kass <jkass@@gradcenter.cuny.edu>

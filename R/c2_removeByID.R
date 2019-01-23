@@ -5,13 +5,14 @@
 #' @details
 #' See Examples.
 #'
-#' @param occs
-#' @param removeID
+#' @param occs occurrence records obtained (loaded or downloaded) in the Obtain Occurrence 
+#' Data component 
+#' @param removeID numeric ID of the record to download from the occurrence data
 #' @param shinyLogs = NULL
 # @keywords
 #'
-# @examples
-#'
+#' @examples
+#' c2_removeByID(occs = c1_queryDb , removeID = 81) 
 #'
 # @return 
 #' @author Jamie Kass <jkass@@gradcenter.cuny.edu>
