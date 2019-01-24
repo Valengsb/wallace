@@ -84,7 +84,7 @@ runBIOCLIM  <- function(occs, bg, bgMask, shinyLogs = NULL) {
     statsBinsVar <- ENMeval::corrected.var(statsBins, nk)
     statsBinsAvg <- apply(statsBins, 1, mean)
     
-    statsBins <- data.frame(t(statsBins[,1]), t(statsBins[,2]))
+    statsBins <- data.frame(t(statsBins[,1]), t(statsBins[,2]), t(statsBins[,3]), t(statsBins[,4]))
     bins <- sort(rep(paste0("Bin", 1:nk), 4))
     colnames(statsBins) <- paste0(bins, c("_test.AUC", "_diff.AUC", "_test.orMTP", "_test.or10pct"))
     row.names(statsBins) <- "BIOCLIM"
