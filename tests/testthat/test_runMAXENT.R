@@ -98,11 +98,9 @@ for (i in algoritm) {
   ### test function stepts 
   test_that("output data checks", {
     # the AUC values are between 0 and 1
-    expect_false(FALSE %in% ((maxentjar$evalTbl[c("var.diff.AUC", "avg.diff.AUC", "var.test.AUC", "avg.test.AUC",
+    expect_false(FALSE %in% ((maxentAlg$evalTbl[c("var.diff.AUC", "avg.diff.AUC", "var.test.AUC", "avg.test.AUC",
                                               "train.AUC")])<1 | 
-                           (maxentjar$evalTbl[c("var.diff.AUC", "avg.diff.AUC", "var.test.AUC", "avg.test.AUC",
+                           (maxentAlg$evalTbl[c("var.diff.AUC", "avg.diff.AUC", "var.test.AUC", "avg.test.AUC",
                                                 "train.AUC")])>0))
-    # the predictions generated are within the background mask 
-    expect_equal(extent(bgMsk), extent(maxentjar$predictions))
   })
   }

@@ -34,17 +34,12 @@ bg$partition <- partblock$bg.grp
 bioclimAlg <- runBIOCLIM(occs, bg, bgMask) 
 
 
-### run function 
-bioPlot <- recordPlot(makeBioclimPlot(x = bioclimAlg$models$BIOCLIM, a=5, b=1, p=0.7))
-
 
 ## test if the error messages appear when they are supposed to 
 test_that("error checks", {
-  # the user has not selected a partitioning option
+  # the user specified a variable that wasn't included within the model
   expect_error(makeBioclimPlot(x = bioclimAlg$models$BIOCLIM, a=(raster::nlayers(envs))+1, 
                                b=2, p=1))
   expect_error(makeBioclimPlot(x = bioclimAlg$models$BIOCLIM, a= 1, 
                                b=(raster::nlayers(envs))+1, p=1))
   })
-                
-                

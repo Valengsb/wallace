@@ -47,7 +47,33 @@ algoritm <- c('maxent.jar','maxnet')
 maxentAlg <- runMaxent(occs, bg, occsGrp, bgGrp, bgMsk, rms, rmsStep, fcs, clampSel = TRUE, 
           algMaxent = algoritm[1])
 
+## value
+eVal <- c("delta.AICc", "avg.test.AUC", "avg.diff.AUC", "avg.test.orMTP", "avg.test.or10pct")
 
-### run function
-makeMaxentEvalPlot(maxentAlg$evalTbl, value = "delta.AICc")
+
+### run function 
+maxentPlot <- makeMaxentEvalPlot(evalTbl = maxentAlg$evalTbl, value = eVal[1])
+
+
+## test if the error messages appear when they are supposed to 
+test_that("error checks", {
+  # the input value isn't right
+  expect_error(makeMaxentEvalPlot(evalTbl = maxentAlg$evalTbl, value = "test.or10pct"))
+  })
+
+### test function stepts 
+test_that("output data checks", {
+  # create a empty list to save the plots 
+  maxentPlot <- list() 
+  # index to plot using all the values 
+  i <- eVal[1]
+  # for each value generate and save the plot in "maxentPlot" list
+  for (i in eVal) {
+    ### run function
+    x <- recordPlot(makeMaxentEvalPlot(evalTbl = maxentAlg$evalTbl, value = i))
+    maxentPlot <- c(maxentPlot, x)
+  }
+  # the amount of list should be the same as eVal (varibales used) *3
+  expect_equal(length(maxentPlot), length(eVal)*3)
+  })
 

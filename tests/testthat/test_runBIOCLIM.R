@@ -71,7 +71,7 @@ test_that("output type checks", {
   # there is 1 model in the bin evaluation table 
   expect_equal(nrow(bioclimAlg$evalTblBins), 1)
   # bin evaluation table has the right amout of columns
-  expect_equal(ncol(bioclimAlg$evalTblBins), (nlevels(factor(occsGrp)))*4)
+  expect_equal(ncol(bioclimAlg$evalTblBins), (length(unique(partblock$occ.grp))*4))
   # # rows name in the evaluation table are right
   expect_equal(rownames(bioclimAlg$evalTblBins), "BIOCLIM")
   })
@@ -84,6 +84,7 @@ test_that("output data checks", {
                              (bioclimAlg$evalTbl[,c("avg.test.AUC", "var.test.AUC", "avg.diff.AUC", 
                                                     "var.diff.AUC")])<0))
   # the predictions generated are within the background mask 
-  expect_equal(extent(bgMsk), extent(bioclimAlg$predictions))
+  expect_equal(extent(bgMask), extent(bioclimAlg$predictions))
 })
+
 
