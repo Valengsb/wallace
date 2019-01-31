@@ -47,9 +47,28 @@ latitude <- c(13.18379, 7.52315, 0.93105, -1.70167, 0.98391, 6.09208, 12.74980)
 # generate matrix
 expertAddedPoly <- matrix(c(longitude, latitude), byrow = F, ncol = 2)
 
-### run function
-c8_projectArea(results = maxentAlg$models, curModel, envs, outputType, 
-               polyPjXY = expertAddedPoly , polyPjID = 1)
+# outputType
+outputType <- c('raw', 'logistic', 'cloglog')
 
-
-
+i <- outputType[1]
+for (i in outputType) { 
+  ### run function
+  modProj <- c8_projectArea(results = maxentAlg, curModel = 'L_1', envs, outputType = i, 
+                      polyPjXY = expertAddedPoly , polyPjID = 1)
+  ### test output features 
+  test_that("output type checks", {
+    # the output is a list
+    expect_is(modProj, "list")
+    # the output list has five elements 
+    expect_equal(length(modProj), 2)
+    # element within the output list are: 
+    # a rasterBrick
+    expect_is(modProj$projExt, "RasterBrick")
+    # a rasterLayer
+    expect_is(modProj$projArea, "RasterLayer")
+    # there are as many projection extents as environmental variables used
+    expect_equal(raster::nlayers(envs), raster::nlayers(modProj$projExt))
+    # there is 1 projection area 
+    expect_equal(raster::nlayers(modProj$projArea), 1)
+  })
+  }

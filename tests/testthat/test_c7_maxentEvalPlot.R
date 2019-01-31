@@ -39,10 +39,8 @@ rms <- c(1:2)
 rmsStep <- 1
 ## feature classes
 fcs <- c('L', 'LQ')
-
 ## algorithm
 algoritm <- c('maxent.jar','maxnet')
-
 ## model
 maxentAlg <- runMaxent(occs, bg, occsGrp, bgGrp, bgMsk, rms, rmsStep, fcs, clampSel = TRUE, 
           algMaxent = algoritm[1])
@@ -61,19 +59,21 @@ test_that("error checks", {
   expect_error(makeMaxentEvalPlot(evalTbl = maxentAlg$evalTbl, value = "test.or10pct"))
   })
 
-### test function stepts 
-test_that("output data checks", {
-  # create a empty list to save the plots 
-  maxentPlot <- list() 
-  # index to plot using all the values 
-  i <- eVal[1]
-  # for each value generate and save the plot in "maxentPlot" list
-  for (i in eVal) {
-    ### run function
-    x <- recordPlot(makeMaxentEvalPlot(evalTbl = maxentAlg$evalTbl, value = i))
-    maxentPlot <- c(maxentPlot, x)
-  }
-  # the amount of list should be the same as eVal (varibales used) *3
-  expect_equal(length(maxentPlot), length(eVal)*3)
+### test output features 
+i <- eVal[1]
+for (i in eVal) {
+  ### run function
+  maxentPlot <- makeMaxentEvalPlot(evalTbl = maxentAlg$evalTbl, value = i)
+  
+  test_that("output checks", {
+    # the output is a list
+    expect_is(maxentPlot, "list")
+    # the output has 2 elements
+    expect_equal(length(maxentPlot), 2)
+    # the two elements are lists too
+    expect_is(maxentPlot[c("rect", "text")], "list")
+    # the names are right
+    expect_equal(names(maxentPlot), c("rect", "text"))
   })
-
+}
+   

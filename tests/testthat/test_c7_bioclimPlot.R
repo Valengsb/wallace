@@ -4,6 +4,7 @@ context("bioclimPlot")
 
 source("test_helper_functions.R")
 
+
 ### Set parameters
 
 ## get records
@@ -34,6 +35,9 @@ bg$partition <- partblock$bg.grp
 bioclimAlg <- runBIOCLIM(occs, bg, bgMask) 
 
 
+### run function 
+bioclimPlot <- recordPlot(makeBioclimPlot(x = bioclimAlg$models$BIOCLIM, a=1, b=2, p=1))
+
 
 ## test if the error messages appear when they are supposed to 
 test_that("error checks", {
@@ -42,4 +46,14 @@ test_that("error checks", {
                                b=2, p=1))
   expect_error(makeBioclimPlot(x = bioclimAlg$models$BIOCLIM, a= 1, 
                                b=(raster::nlayers(envs))+1, p=1))
+  })
+
+### test output features 
+test_that("output checks", {
+  # the output is a recordedplot
+  expect_is(bioclimPlot, "recordedplot")
+  # the list has three elements
+  expect_equal(length(bioclimPlot), 3)
+  # the three elements are lists
+  expect_is((bioclimPlot[c(1,2,3)]), "list")
   })
