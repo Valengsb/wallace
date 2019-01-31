@@ -12,10 +12,17 @@
 
 # 5. Libraries at the beginig (after the context, or should I use Library::function)
 
+# 6 Should I teste runBIOCLIM and runMAXNET? >> Yes
+
+# 7. Shiny maessages test? >> No
+
 #______________________________________________________________________________________#
 
-# 6. Shiny maessages test?
+# 8. What is GetWCTiles.R, should I test that? 
 
-# 7. What is GetWCTiles.R, should I test that? 
+# 9. Helper function from R folder
 
-# 8. Should I teste runBIOCLIM and runMAXNET?
+# 10. Lo de Bioclim
+
+# 11. hablar de lo de las graficas 
+
