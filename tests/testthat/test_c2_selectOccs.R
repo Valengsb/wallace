@@ -1,6 +1,6 @@
 #### COMPONENT 2: Process Occurrence Data
 #### MODULE: Select Occurrences On Map
-context("select Occs")
+context("selectOccs")
 
 source("test_helper_functions.R")
 

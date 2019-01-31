@@ -1,6 +1,6 @@
 #### COMPONENT 2: Process Occurrence Data
 #### MODULE: Remove Occurrences By ID
-context("remove ByID")
+context("removeByID")
 
 source("test_helper_functions.R")
 

@@ -1,6 +1,6 @@
 #### COMPONENT 1: Obtain Occurrence Data
 #### MODULE: User-specified
-context("user occs")
+context("userOccs")
 
 source("test_helper_functions.R")
 
@@ -64,7 +64,7 @@ test_that("output data checks", {
    # there are not "NA" values in longitude OR latitude columns in the cleaned table
   expect_false(NA %in% user.occs$Marmosops_chucha$cleaned
                [,c('longitude','latitude')])
-   # there are not duplicate values in longitude or latitude columns in the cleaned table
+   # there are not duplicate values in longitude AND latitude columns in the cleaned table
   expect_false(TRUE %in% duplicated(user.occs$Marmosops_chucha$cleaned
                                     [,c('longitude','latitude')]))
   })

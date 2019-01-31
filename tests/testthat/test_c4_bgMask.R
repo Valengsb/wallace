@@ -1,6 +1,6 @@
 #### COMPONENT 4: Process Environmental Data
 #### MODULE: Select Study Region 
-context("bgMask - Step 2.1")
+context("bgMask")
 
 source("test_helper_functions.R")
 

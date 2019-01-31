@@ -86,5 +86,3 @@ test_that("output data checks", {
   # the predictions generated are within the background mask 
   expect_equal(extent(bgMask), extent(bioclimAlg$predictions))
 })
-
-

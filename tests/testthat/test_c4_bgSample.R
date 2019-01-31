@@ -1,6 +1,6 @@
 #### COMPONENT 4: Process Environmental Data
 #### MODULE: Select Study Region 
-context("bgSample - Step 2.2")
+context("bgSample")
 
 source("test_helper_functions.R")
 
@@ -47,8 +47,3 @@ test_that("output type checks", {
   overlap <- sp::over(bgsample, Poly)
   expect_false(NA %in% overlap)
   })
-
-
-
-
-

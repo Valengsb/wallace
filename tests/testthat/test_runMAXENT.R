@@ -3,7 +3,7 @@
 
 
 #### COMPONENT 6: Build and Evaluate Niche Model
-#### MODULE: MAXENT.JAR
+#### MODULE: Maxent.Jar & Maxnet
 context("runMAXENT")
 
 source("test_helper_functions.R")
@@ -56,13 +56,13 @@ test_that("error checks", {
                         occurrences for cross-validation.")
   })
 
+### test output features 
 i <- algoritm[1]
 for (i in algoritm) { 
   ### run function
   maxentAlg <- runMaxent(occs, bg, occsGrp, bgGrp, bgMsk, rms, rmsStep, fcs, clampSel = TRUE, 
                          algMaxent = i)
-  
-  ### test output features 
+
   test_that("output type checks", {
     # the output is a list
     expect_is(maxentAlg, "list")

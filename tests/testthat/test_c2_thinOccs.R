@@ -1,6 +1,6 @@
 #### COMPONENT 2: Process Occurrence Data
 #### MODULE: Spatial Thin
-context("thin Occs")
+context("thinOccs")
 
 source("test_helper_functions.R")
 
